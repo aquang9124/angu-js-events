@@ -5,10 +5,17 @@
 			$routeProvider
 			.when('/', {
 				templateUrl: 'partials/lognreg.html',
-				controller: 'accountsCtrl'
+				controller: 'accountsCtrl',
+				controllerAs: 'vm'
 			})
 			.otherwise({
 				redirectTo: '/'
 			});
-		});
+		})
+		.controller('accountsCtrl', accountsCtrl);
+
+	function accountsCtrl() {
+		
+	}
+
 } )(angular);
