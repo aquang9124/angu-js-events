@@ -8,13 +8,18 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular-route.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.5/angular-sanitize.min.js"></script>
+	<script src="/js/app.module.js"></script>
+	<script src="/js/locator.factory.js"></script>
+	<script src="/js/acc.controller.js"></script>
+	<script src="/js/routes.controller.js"></script>
+	<script src="/js/maps.controller.js"></script>
 	<link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
-	<nav id="navi-bar" ng-controller="routesController">
+	<nav id="navi-bar" ng-controller="routesCtrl as vm">
 		<ul id="navbar-ul">
-			<li class="navbar-li"><a href="#/" ng-class="urlPath.currentUrl === '/' ? 'active' : 'inactive'">Home</a></li>
-			<li class="navbar-li"><a href="#/gmaps" ng-class="urlPath.currentUrl === '/gmaps' ? 'active': 'inactive'">Maps</a></li>
+			<li class="navbar-li"><a href="#/" ng-class="vm.location.currentUrl === '/' ? 'active' : 'inactive'">Home</a></li>
+			<li class="navbar-li"><a href="#/maps" ng-class="vm.location.currentUrl === '/maps' ? 'active': 'inactive'">Maps</a></li>
 		</ul>
 	</nav>
 	<div class="container-fluid">
