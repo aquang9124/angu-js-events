@@ -5,10 +5,11 @@
 
 	function routesCtrl($location) {
 		var vm = this;
+		vm.isActive = isActive;
 
-		vm.isActive = function(currentUrl) {
+		function isActive(currentUrl) {
 			return currentUrl === $location.url();
 		};
 	}
 
-} )(angular)
+} )(angular);

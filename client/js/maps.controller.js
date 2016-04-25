@@ -7,4 +7,4 @@
 		var vm = this;
 	}
 
-} )(angular)
+} )(angular);
