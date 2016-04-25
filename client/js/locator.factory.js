@@ -1,3 +1,4 @@
+// This factory is currently unnecessary but could be repurposed later
 ( function(angular) {
 	angular
 		.module('myApp')

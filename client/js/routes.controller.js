@@ -3,9 +3,12 @@
 		.module('myApp')
 		.controller('routesCtrl', routesCtrl);
 
-	function routesCtrl($location, locator) {
+	function routesCtrl($location) {
 		var vm = this;
-		vm.location = locator;
 
+		vm.isActive = function(currentUrl) {
+			return currentUrl === $location.url();
+		};
 	}
+
 } )(angular)

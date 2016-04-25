@@ -3,11 +3,8 @@
 		.module('myApp')
 		.controller('mapsCtrl', mapsCtrl);
 
-	mapsCtrl.$inject = ['$location', 'locator'];
-
-	function mapsCtrl($location, locator) {
+	function mapsCtrl() {
 		var vm = this;
-		locator.currentUrl = $location.url();
 	}
-	
+
 } )(angular)

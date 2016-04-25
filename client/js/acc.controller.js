@@ -3,9 +3,8 @@
 		.module('myApp')
 		.controller('accountsCtrl', accountsCtrl);
 
-	function accountsCtrl($location, locator) {
+	function accountsCtrl() {
 		var vm = this;
-
-		locator.currentUrl = $location.url();
 	}
+
 } )(angular)
