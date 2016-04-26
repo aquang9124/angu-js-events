@@ -19,7 +19,7 @@
 
 			var mapOptions = {
 				center: new google.maps.LatLng(34.22, 100),
-				zoom: 16,
+				zoom: 14,
 				draggable: true,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
