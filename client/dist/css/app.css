@@ -76,11 +76,11 @@ p {
 #directions {
   position: relative;
   margin: 0 auto;
-  color: white;
+  color: #3c9baf;
   text-align: center;
   width: 100%;
   height: 15em;
-  background-color: #CDCED4;
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 5px; }
 
 #direction-text {
@@ -93,8 +93,9 @@ p {
 
 #spc-heading {
   font-family: "Montserrat", arial, verdana;
-  margin: 1em 0 1em 0;
+  margin: 0.5em 0 0.5em 0;
   font-size: 3em;
+  color: #707070;
   cursor: pointer; }
 
 #map_canvas {
@@ -105,28 +106,11 @@ p {
   margin: 0 auto; }
 
 #crime-outer {
-  position: relative; }
-
-#crime-wrapper {
-  background: #CCC;
-  filter: alpha(opacity=60);
-  /* IE */
-  -moz-opacity: 0.6;
-  /* Mozilla */
-  opacity: 0.6;
-  /* CSS3 */
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%; }
-
-#crime-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%; }
+  background-color: rgba(204, 204, 204, 0.4);
+  width: 50%;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  padding: 0 2em 0 2em; }
 
 @media only screen and (max-width: 550px) {
   #directions {
@@ -135,3 +119,17 @@ p {
     margin: 0 auto;
     width: 20em;
     height: 20em; } }
+
+@media only screen and (max-width: 700px) {
+  #crime-outer {
+    background-color: rgba(204, 204, 204, 0.4);
+    width: 80%;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    padding: 0 2em 0 2em; } }
+
+@media only screen and (max-width: 550px) {
+  #direction-text {
+    font-size: 0.9em; }
+  html, body {
+    font-size: 0.9em; } }
