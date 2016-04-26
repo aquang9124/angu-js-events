@@ -1,5 +1,5 @@
 // Variables
-$navbar-color: darken(gray, 20%);
+$navbar-border: darken(gray, 20%);
 $navbar-bg: lighten(black, 15%);
 $body-bg: #089DE3;
 $navlink-color: #6496c8;
@@ -102,8 +102,8 @@ p {
 }
 
 .wrapper-full {
-	background-color: $body-bg;
-	border-top: 1px solid $navbar-color;
+	@include linear-bg();
+	border-top: 1px solid $navbar-border;
 	height: 100%;
 	width: 100%;
 }
@@ -129,8 +129,8 @@ p {
  
 // IDs
 #navi-bar {
-	border-top: 2px solid $navbar-color;
-	border-bottom: 2px solid $navbar-color;
+	border-top: 2px solid $navbar-border;
+	border-bottom: 2px solid $navbar-border;
 	background-color: $navbar-bg;
 	top: 0;
 	left: 0;

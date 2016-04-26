@@ -48,7 +48,13 @@ p {
   background: linear-gradient(top, #6496c8 0%, #193047 100%); }
 
 .wrapper-full {
-  background-color: #089DE3;
+  background: #6496c8;
+  background: -moz-linear-gradient(top, #6496c8 0%, #193047 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, #6496c8), color-stop(100%, #193047));
+  background: -webkit-linear-gradient(top, #6496c8 0%, #193047 100%);
+  background: -o-linear-gradient(top, #6496c8 0%, #193047 100%);
+  background: -ms-linear-gradient(top, #6496c8 0%, #193047 100%);
+  background: linear-gradient(top, #6496c8 0%, #193047 100%);
   border-top: 1px solid #4d4d4d;
   height: 100%;
   width: 100%; }
