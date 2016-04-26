@@ -1,11 +1,16 @@
 html, body {
   height: 100%;
   width: 100%;
-  color: white;
-  font-family: "Oswald", verdana, arial;
+  color: #3c9baf;
+  font-family: "Roboto", verdana, arial;
   margin: 0; }
 
 body {
+  background: url("/img/sjmap.png") center center fixed no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   padding-top: 3.3em; }
 
 h1, h2, h3, h4, h5, h6 {
@@ -41,38 +46,17 @@ p {
   border: none;
   background: #6496c8;
   background: -moz-linear-gradient(top, #6496c8 0%, #193047 100%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, #6496c8), color-stop(100%, #193047));
   background: -webkit-linear-gradient(top, #6496c8 0%, #193047 100%);
   background: -o-linear-gradient(top, #6496c8 0%, #193047 100%);
   background: -ms-linear-gradient(top, #6496c8 0%, #193047 100%);
   background: linear-gradient(top, #6496c8 0%, #193047 100%); }
 
-.wrapper-full {
-  background: #6496c8;
-  background: -moz-linear-gradient(top, #6496c8 0%, #193047 100%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, #6496c8), color-stop(100%, #193047));
-  background: -webkit-linear-gradient(top, #6496c8 0%, #193047 100%);
-  background: -o-linear-gradient(top, #6496c8 0%, #193047 100%);
-  background: -ms-linear-gradient(top, #6496c8 0%, #193047 100%);
-  background: linear-gradient(top, #6496c8 0%, #193047 100%);
-  border-top: 1px solid #4d4d4d;
-  height: 100%;
-  width: 100%; }
-
-.lg-pa {
-  font-size: 1.3em; }
-
-.wrapper {
-  margin: 2em auto;
-  width: 43em;
-  height: 15em; }
+.container {
+  height: 100%; }
 
 .view-box {
   height: 100%;
   width: 100%; }
-
-.row {
-  margin: 0; }
 
 #navi-bar {
   border-top: 2px solid #4d4d4d;
@@ -96,12 +80,11 @@ p {
   position: relative;
   margin: 0 auto;
   color: white;
-  text-shadow: 0 -.1em .2em black;
   text-align: center;
   width: 43em;
   height: 15em;
   border: 1px solid #676767;
-  background-color: #666666;
+  background-color: #CDCED4;
   border-radius: 5px; }
 
 #direction-text {
@@ -113,7 +96,9 @@ p {
   font-size: 1.3em; }
 
 #spc-heading {
-  font-family: "Bad Script", cursive, verdana;
+  font-family: "Montserrat", arial, verdana;
+  margin: 1em 0 1em 0;
+  font-size: 3em;
   cursor: pointer; }
 
 #map_canvas {
@@ -121,7 +106,7 @@ p {
   min-width: 200px;
   height: 100%;
   width: 100%;
-  margin: 0 auto; }
+  margin: 20px auto; }
 
 @media only screen and (max-width: 550px) {
   #directions {
