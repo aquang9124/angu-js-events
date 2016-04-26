@@ -109,9 +109,11 @@ p {
   top: 50%;
   left: 0;
   right: 0;
-  margin-top: -9px; }
+  margin-top: -9px;
+  font-size: 1.3em; }
 
 #spc-heading {
+  font-family: "Bad Script", cursive, verdana;
   cursor: pointer; }
 
 #map_canvas {

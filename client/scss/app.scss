@@ -12,6 +12,7 @@ $x-small: 10em;
 $md-font: 4em;
 $sm-font: 2em;
 $fancy-fnt: 'Oswald';
+$mystery-fnt: 'Bad Script';
 
 // Mixins
 @mixin linear-bg() {
@@ -167,9 +168,11 @@ p {
 	left: 0;
 	right: 0;
 	margin-top: -9px;
+	font-size: 1.3em;
 }
 
 #spc-heading {
+	font-family: $mystery-fnt, cursive, verdana;
 	cursor: pointer;
 }
 

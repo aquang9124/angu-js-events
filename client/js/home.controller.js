@@ -8,7 +8,7 @@
 
 		// Bound variables
 		vm.header = [{ message: 'Crime Data' }, { message: 'With Google Maps' }];
-		vm.words = ["Hello!", "Fill out the form below to get some crime information!"];
+		vm.words = ["Hello!    ", "Fill out the form below to get crime information!    "];
 		vm.wordCount = 0;
 		vm.charCount = 0;
 		vm.instructions = "";
