@@ -101,6 +101,12 @@ p {
 	height: 100%;
 	width: 100%;
 }
+
+.btn-crimes {
+	color: #fff;
+	background-color: #3C9BAF;
+	border-color: darken(#3C9BAF, 10%);
+}
  
 // IDs
 #navi-bar {
@@ -129,7 +135,7 @@ p {
 	color: darken(#7EC4D3, 20%);
 	text-align: center;
 	width: 100%;
-	height: $small;
+	height: $x-small;
 	background-color: rgba(255, 255, 255, 0.8);
 	border-radius: 5px;
 }
@@ -164,7 +170,7 @@ p {
 	width: 50%;
 	margin-top: 2em;
 	margin-bottom: 1em;
-	padding: 0 2em 0 2em;
+	padding: 4em 2.3em 4em 2.3em;
 }
 
 // Media Queries
@@ -180,13 +186,17 @@ p {
 	}
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 780px) {
 	#crime-outer {
 		background-color: rgba(204, 204, 204, 0.4);
 		width: 80%;
 		margin-top: 2em;
 		margin-bottom: 1em;
 		padding: 0 2em 0 2em;
+	}
+
+	#direction-text {
+		font-size: 1.05em;
 	}
 }
 
