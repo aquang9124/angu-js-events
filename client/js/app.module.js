@@ -4,8 +4,8 @@
 		.config(function($routeProvider) {
 			$routeProvider
 			.when('/', {
-				templateUrl: 'partials/lognreg.html',
-				controller: 'accountsCtrl',
+				templateUrl: 'partials/home.html',
+				controller: 'homeCtrl',
 				controllerAs: 'vm'
 			})
 			.when('/maps', {

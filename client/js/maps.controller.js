@@ -5,6 +5,13 @@
 
 	function mapsCtrl() {
 		var vm = this;
+
+		// Bound variables
+
+		// Function calls and other stuff
+
+		// Function implementations
+		
 	}
 
 } )(angular);
