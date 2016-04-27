@@ -14,15 +14,14 @@
 
 		// Function implementations
 		function findCrimes() {
-			Search.find(vm.newSearch, function(data) {
-				vm.crimeData = data.body;
+			var crimesPromise = Search.find(vm.newSearch);
+			crimesPromise.then(function(result) {
+				vm.crimeData = result;
+				console.log(result);
 			});
 		}
 
 		function initMap() {
-			var options = {
-				enableHighAccuracy: true
-			};
 
 			var mapOptions = {
 				center: new google.maps.LatLng(34.22, 100),
@@ -32,28 +31,26 @@
 			};
 
 			var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+			var markers = [];
 
-			if (navigator.geolocation) 
-			{
-				navigator.geolocation.getCurrentPosition(function(pos)
-				{
-					var position = {
-						lat: pos.coords.latitude,
-						lng: pos.coords.longitude
-					};
+			for (var crime in vm.crimeData) {
+				var crimeLoc = new google.maps.LatLng(vm.crimeData[crime].long, vm.crimeData[crime].lat);
 
-					map.setCenter(position);
+				markers.push(new google.maps.Marker({
+					position: crimeLoc,
+					map: map,
+					title: crimeLoc
+				}));
 
-					var marker = new google.maps.Marker({
-						position: position,
-						map: map,
-						title: 'Hello World!'
-					});
-				}, 
-				function(err) {
-					alert('Unable to get location: ' + err.message);
-				}, options);
+				markers[markers.length - 1]['infowin'] = new google.maps.InfoWindow({
+					content: '<div>This is a marker in ' + crimeLoc + '</div>'
+				});
+
+				google.maps.event.addListener(markers[marker.length - 1], 'click', function() {
+					this['infowin'].open(map, this);
+				});
 			}
+
 		}
 
 		// Function calls

@@ -13,13 +13,13 @@
 		};
 		return factory;
 
-		function find(newSearch, callback) {
+		function find(newSearch) {
 			console.log(newSearch);
 			$http.post('/crimes', { end: newSearch.end, lat: newSearch.lat, lng: newSearch.lng, start: newSearch.start })
 				.then(function(res) {
-					console.log(res);
+					console.log(res.data);
 					crimeData = res.data;
-					callback(res);
+					return res.data;
 				}, 
 				function(res) {
 					console.log(res);
