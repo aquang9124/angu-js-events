@@ -4,7 +4,11 @@
 		.factory('Search', Search);
 
 	function Search($http) {
+		var crimeData = [];
+		var newSearch = {};
 		var factory = {
+			newSearch: newSearch,
+			crimeData: crimeData,
 			find: find,
 		};
 		return factory;
@@ -13,6 +17,7 @@
 			console.log(newSearch);
 			$http.post('/crimes', { end: newSearch.end, lat: newSearch.lat, lng: newSearch.lng, start: newSearch.start })
 				.then(function(res) {
+					console.log(res);
 					callback(res);
 				}, 
 				function(res) {

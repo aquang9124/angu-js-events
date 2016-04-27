@@ -3,7 +3,7 @@
 		.module('myApp')
 		.controller('homeCtrl', homeCtrl);
 
-	function homeCtrl($interval, Search) {
+	function homeCtrl($scope, $interval, $location, Search) {
 		var vm = this;
 
 		// Bound variables
@@ -25,6 +25,11 @@
 		vm.initAutocomplete = initAutocomplete;
 		vm.getAddress = getAddress;
 
+		// Watches
+		$scope.$watch('vm.newSearch', function() {
+			Search.newSearch = vm.newSearch;
+		});
+
 		// Function implementations
 		function switchHeaders() {
 			if (vm.cIndex === 0)
@@ -38,9 +43,7 @@
 		}
 
 		function startSearch() {
-			Search.find(vm.newSearch, function(data) {
-				vm.crimeData = data.body;
-			});
+			$location.path('/maps');
 		}
 
 		function typeText() {
