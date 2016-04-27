@@ -13,14 +13,14 @@
 		vm.charCount = 0;
 		vm.instructions = "";
 		vm.cIndex = 0;
-		vm.placeSearch;
+		vm.place;
 		vm.autocomplete;
 		vm.newSearch = {};
 		vm.switchHeaders = switchHeaders;
 		vm.startSearch = startSearch;
 		vm.typeText = typeText;
 		vm.initAutocomplete = initAutocomplete;
-		vm.geoLocate = geoLocate;
+		vm.getAddress = getAddress;
 
 		// Function implementations
 		function switchHeaders() {
@@ -60,28 +60,12 @@
 
 			// When the user selects an address from the dropdown, populate the address
 			// fields in the form
-			// vm.autocomplete.addListener('place_changed', fillInAddress);
-			// Let's not do this for now.
+			vm.autocomplete.addListener('place_changed', vm.getAddress);
+
 		}
 
-		// Bias the autocomplete object to the user's geographical location,
-      	// as supplied by the browser's 'navigator.geolocation' object.
-		function geoLocate() {
-			initAutocomplete();
-			if (navigator.geolocation)
-			{
-				navigator.geolocation.getCurrentPosition(function(position) {
-					var geolocation = {
-						lat: position.coords.latitude,
-						lng: position.coords.longitude
-					};
-					var circle = new google.maps.Circle({
-						center: geolocation,
-						radius: position.coords.accuracy
-					});
-					vm.autocomplete.setBounds(circle.getBounds());
-				});
-			}
+		function getAddress() {
+			vm.place = vm.autocomplete.getPlace();
 		}
 
 		// Function calls
