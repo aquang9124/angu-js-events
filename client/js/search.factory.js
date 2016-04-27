@@ -14,10 +14,8 @@
 		return factory;
 
 		function find(newSearch) {
-			console.log(newSearch);
-			$http.post('/crimes', { end: newSearch.end, lat: newSearch.lat, lng: newSearch.lng, start: newSearch.start })
+			return $http.post('/crimes', { end: newSearch.end, lat: newSearch.lat, lng: newSearch.lng, start: newSearch.start })
 				.then(function(res) {
-					console.log(res.data);
 					crimeData = res.data;
 					return res.data;
 				}, 

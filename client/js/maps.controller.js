@@ -8,6 +8,8 @@
 
 		// Bound variables
 		vm.crimeData = [];
+		vm.map;
+		vm.markers = [];
 		vm.newSearch = Search.newSearch;
 		vm.findCrimes = findCrimes;
 		vm.initMap = initMap;
@@ -16,45 +18,49 @@
 		function findCrimes() {
 			var crimesPromise = Search.find(vm.newSearch);
 			crimesPromise.then(function(result) {
-				vm.crimeData = result;
 				console.log(result);
+				vm.crimeData = result;
+				vm.initMap(vm.newSearch);
 			});
 		}
 
-		function initMap() {
+		function initMap(newSearch) {
 
 			var mapOptions = {
-				center: new google.maps.LatLng(34.22, 100),
+				center: new google.maps.LatLng(newSearch.lat, newSearch.lng),
 				zoom: 14,
 				draggable: true,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 
-			var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-			var markers = [];
+			vm.map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
 			for (var crime in vm.crimeData) {
 				var crimeLoc = new google.maps.LatLng(vm.crimeData[crime].long, vm.crimeData[crime].lat);
-
-				markers.push(new google.maps.Marker({
-					position: crimeLoc,
-					map: map,
-					title: crimeLoc
-				}));
-
-				markers[markers.length - 1]['infowin'] = new google.maps.InfoWindow({
-					content: '<div>This is a marker in ' + crimeLoc + '</div>'
-				});
-
-				google.maps.event.addListener(markers[marker.length - 1], 'click', function() {
-					this['infowin'].open(map, this);
-				});
+				addMarker(crimeLoc);
 			}
+		}
+
+		function addMarker(crimeLoc) {
+			var marker = new google.maps.Marker({
+				position: crimeLoc,
+				map: vm.map,
+				title: "Crime Location"
+			});
+
+			vm.markers.push(marker);
+			marker.setMap(vm.map);
 
 		}
 
+		function setMapOnAll(map) {
+			for (var i = 0; i < vm.markers.length; i++) {
+				vm.markers[i].setMap(map);
+			}
+		}
+
 		// Function calls
-		vm.findCrimes();
+		google.maps.event.addDomListener(window, 'load', vm.findCrimes());
 	}
 
 } )(angular);
