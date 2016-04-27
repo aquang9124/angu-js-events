@@ -3,7 +3,7 @@
 		.module('myApp')
 		.controller('homeCtrl', homeCtrl);
 
-	function homeCtrl($interval) {
+	function homeCtrl($interval, Search) {
 		var vm = this;
 
 		// Bound variables
@@ -13,9 +13,12 @@
 		vm.charCount = 0;
 		vm.instructions = "";
 		vm.cIndex = 0;
+		vm.crimeData = [];
 		vm.place;
 		vm.autocomplete;
-		vm.newSearch = {};
+		vm.newSearch = {
+			radius: 3,
+		};
 		vm.switchHeaders = switchHeaders;
 		vm.startSearch = startSearch;
 		vm.typeText = typeText;
@@ -35,7 +38,9 @@
 		}
 
 		function startSearch() {
-			console.log(vm.newSearch);
+			Search.find(vm.newSearch, function(data) {
+				vm.crimeData = data;
+			});
 		}
 
 		function typeText() {
@@ -58,14 +63,28 @@
 			// Create the autocomplete object, restricting the search to geographical location types.
 			vm.autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), {types: ['geocode']});
 
-			// When the user selects an address from the dropdown, populate the address
-			// fields in the form
+			// When place is selected, call vm.getAddress.
 			vm.autocomplete.addListener('place_changed', vm.getAddress);
 
 		}
 
 		function getAddress() {
+			// Use getPlace method to grab data about that location
 			vm.place = vm.autocomplete.getPlace();
+
+			// If vm.place has geometry data then set lat and lng in the newSearch object.
+			if (vm.place.geometry)
+			{
+				vm.newSearch.lat = vm.place.geometry.location.lat();
+				vm.newSearch.lng = vm.place.geometry.location.lng();
+				console.log(vm.newSearch.lat);
+				console.log(vm.newSearch.lng);
+			}
+			else
+			{
+				// Otherwise we console log that no geo data was found.
+				console.log('No geometry data found');
+			}
 		}
 
 		// Function calls
