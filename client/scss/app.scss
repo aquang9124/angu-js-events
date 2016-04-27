@@ -102,10 +102,19 @@ p {
 	width: 100%;
 }
 
+.btn {
+	&:hover {
+		color: darken(#707070, 10%);
+	}
+}
+
 .btn-crimes {
 	color: #fff;
 	background-color: #3C9BAF;
 	border-color: darken(#3C9BAF, 10%);
+	&:hover {
+		opacity: 0.8;
+	}
 }
  
 // IDs
