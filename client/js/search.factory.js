@@ -18,6 +18,7 @@
 			$http.post('/crimes', { end: newSearch.end, lat: newSearch.lat, lng: newSearch.lng, start: newSearch.start })
 				.then(function(res) {
 					console.log(res);
+					crimeData = res.data;
 					callback(res);
 				}, 
 				function(res) {

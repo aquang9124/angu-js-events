@@ -7,8 +7,7 @@ module.exports = {
 		.header("X-Mashape-Key", mashKey)
 		.header("Accept", "application/json")
 		.end(function (result) {
-			console.log(result.body);
-			res.json(result);
+			res.json(result.body);
 		});
 	},
 };
