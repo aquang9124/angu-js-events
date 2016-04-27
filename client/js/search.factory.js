@@ -11,8 +11,7 @@
 
 		function find(newSearch, callback) {
 			console.log(newSearch);
-			$http.post('/crimes', 
-				{ end: newSearch.end, lat: newSearch.lat, lng: newSearch.lng, start: newSearch.start })
+			$http.post('/crimes', { end: newSearch.end, lat: newSearch.lat, lng: newSearch.lng, start: newSearch.start })
 				.then(function(res) {
 					callback(res);
 				}, 

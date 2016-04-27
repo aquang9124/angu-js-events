@@ -39,7 +39,8 @@
 
 		function startSearch() {
 			Search.find(vm.newSearch, function(data) {
-				vm.crimeData = data;
+				vm.crimeData = data.body;
+				console.log(data);
 			});
 		}
 
