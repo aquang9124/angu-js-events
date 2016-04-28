@@ -905,6 +905,8 @@
 		});
 
 		// Function implementations
+
+		// Function to switch headers on main page
 		function switchHeaders() {
 			if (vm.cIndex === 0)
 			{
@@ -916,10 +918,13 @@
 			}
 		}
 
+		// Function that changes the view over to the posts partial
 		function startSearch() {
-			$location.path('/maps');
+			// $location.path('/maps');
+			$location.path('/posts');
 		}
 
+		// Function that types out the text in the directions div
 		function typeText() {
 			vm.instructions = vm.instructions + vm.words[vm.wordCount][vm.charCount++];
 
@@ -936,6 +941,7 @@
 			}
 		}
 
+		// Function that initializes autocomplete on the address input box
 		function initAutocomplete() {
 			// Create the autocomplete object, restricting the search to geographical location types.
 			vm.autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), {types: ['geocode']});
@@ -945,6 +951,7 @@
 
 		}
 
+		// Function that gets the lat and lng from the address input
 		function getAddress() {
 			// Use getPlace method to grab data about that location
 			vm.place = vm.autocomplete.getPlace();
@@ -1020,6 +1027,8 @@
 		});
 
 		// Function implementations
+
+		// This function gets data from the crime data API
 		function findCrimes() {
 			vm.loading = true;
 			var crimesPromise = Search.find(vm.newSearch);
@@ -1030,6 +1039,7 @@
 			});
 		}
 
+		// Function to get data from 3taps API
 		function getTaps() {
 			vm.newSearch.radius = vm.newSearch.radius + 'mi';
 			vm.loading = true;
@@ -1042,6 +1052,7 @@
 			});
 		}
 
+		// initMap function that works with the crime data api
 		function initMap(newSearch) {
 			var convRadius = newSearch.radius * 1600;
 
@@ -1069,6 +1080,7 @@
 			}
 		}
 
+		// Alternative to initMap that was made for use with 3taps API
 		function initAltMap(newSearch) {
 			var mapCenter = new google.maps.LatLng(newSearch.lat, newSearch.lng);
 			var mapOptions = {
@@ -1088,6 +1100,7 @@
 			}
 		}
 
+		// Function to add a Google Maps marker, only gets called from within initMap or initAltMap
 		function addMarker(crimeLoc, crimeDesc) {
 			var marker = new google.maps.Marker({
 				position: crimeLoc,
@@ -1161,6 +1174,41 @@
 			}
 		}
 	}
+} )(angular);
+( function(angular) {
+	angular
+		.module('myApp')
+		.controller('postsCtrl', postsCtrl);
+
+	function postsCtrl($scope, Search, Category) {
+		var vm = this;
+
+		// Bound variables
+		vm.taps = [];
+		vm.newSearch = Search.newSearch;
+		vm.getTaps = getTaps;
+
+		// Function calls
+		angular.element(document).ready(function() {
+			vm.getTaps();
+			// vm.findCrimes();
+		});
+
+		// Function implementations
+
+		// Function to get data from 3taps API
+		function getTaps() {
+			vm.newSearch.radius = vm.newSearch.radius + 'mi';
+			var tapsPromise = Category.retrieve(vm.newSearch);
+			
+			tapsPromise.then(function(result) {
+				console.log(result.postings);
+				vm.taps = result.postings;
+			});
+		}
+
+	}
+
 } )(angular);
 ( function(angular) {
 	angular

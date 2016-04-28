@@ -24,6 +24,8 @@
 		});
 
 		// Function implementations
+
+		// This function gets data from the crime data API
 		function findCrimes() {
 			vm.loading = true;
 			var crimesPromise = Search.find(vm.newSearch);
@@ -34,6 +36,7 @@
 			});
 		}
 
+		// Function to get data from 3taps API
 		function getTaps() {
 			vm.newSearch.radius = vm.newSearch.radius + 'mi';
 			vm.loading = true;
@@ -46,6 +49,7 @@
 			});
 		}
 
+		// initMap function that works with the crime data api
 		function initMap(newSearch) {
 			var convRadius = newSearch.radius * 1600;
 
@@ -73,6 +77,7 @@
 			}
 		}
 
+		// Alternative to initMap that was made for use with 3taps API
 		function initAltMap(newSearch) {
 			var mapCenter = new google.maps.LatLng(newSearch.lat, newSearch.lng);
 			var mapOptions = {
@@ -92,6 +97,7 @@
 			}
 		}
 
+		// Function to add a Google Maps marker, only gets called from within initMap or initAltMap
 		function addMarker(crimeLoc, crimeDesc) {
 			var marker = new google.maps.Marker({
 				position: crimeLoc,

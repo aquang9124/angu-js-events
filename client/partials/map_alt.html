@@ -1,3 +1,17 @@
-<div id="posts-wrapper">
-	
+<div class="container" id="posts-wrapper">
+	<div class="row">
+		<div class="col-xs-12">
+			<h3 class="text-center">Postings:</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<h4 ng-if="vm.taps.length === 0" class="not-found text-center">No Posts Were Found</h4>
+			<ul class="list-group">
+				<li class="list-group-item" ng-repeat="tap in vm.taps">
+					{{ tap.heading }}
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>

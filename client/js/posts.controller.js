@@ -1,9 +1,9 @@
 ( function(angular) {
 	angular
 		.module('myApp')
-		.controller('mapsCtrl', mapsCtrl);
+		.controller('postsCtrl', postsCtrl);
 
-	function mapsCtrl($scope, Search, Category) {
+	function postsCtrl($scope, Search, Category) {
 		var vm = this;
 
 		// Bound variables
@@ -18,15 +18,15 @@
 		});
 
 		// Function implementations
+
+		// Function to get data from 3taps API
 		function getTaps() {
 			vm.newSearch.radius = vm.newSearch.radius + 'mi';
-			vm.loading = true;
 			var tapsPromise = Category.retrieve(vm.newSearch);
+			
 			tapsPromise.then(function(result) {
 				console.log(result.postings);
 				vm.taps = result.postings;
-				vm.loading = false;
-				vm.initAltMap(vm.newSearch);
 			});
 		}
 

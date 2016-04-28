@@ -32,6 +32,8 @@
 		});
 
 		// Function implementations
+
+		// Function to switch headers on main page
 		function switchHeaders() {
 			if (vm.cIndex === 0)
 			{
@@ -43,10 +45,13 @@
 			}
 		}
 
+		// Function that changes the view over to the posts partial
 		function startSearch() {
-			$location.path('/maps');
+			// $location.path('/maps');
+			$location.path('/posts');
 		}
 
+		// Function that types out the text in the directions div
 		function typeText() {
 			vm.instructions = vm.instructions + vm.words[vm.wordCount][vm.charCount++];
 
@@ -63,6 +68,7 @@
 			}
 		}
 
+		// Function that initializes autocomplete on the address input box
 		function initAutocomplete() {
 			// Create the autocomplete object, restricting the search to geographical location types.
 			vm.autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), {types: ['geocode']});
@@ -72,6 +78,7 @@
 
 		}
 
+		// Function that gets the lat and lng from the address input
 		function getAddress() {
 			// Use getPlace method to grab data about that location
 			vm.place = vm.autocomplete.getPlace();
