@@ -827,6 +827,9 @@
 				.then(function(result) {
 					postings = result;
 					return result;
+				},
+				function(err) {
+					return err;
 				});
 		}
 	}

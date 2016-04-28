@@ -5,7 +5,7 @@ module.exports = function(app) {
 		crimes.show(req, res);
 	});
 
-	app.get('/tapdata', function(req, res) {
+	app.post('/tapdata', function(req, res) {
 		crimes.retrieve(req, res);
 	});
 }

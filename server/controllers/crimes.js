@@ -16,7 +16,7 @@ module.exports = {
 		var searchUrl = 'http://search.3taps.com/category=' + req.body.category;
 		var refUrl = 'http://reference.3taps.com/categories';
 		var options = {
-			url: refUrl,
+			url: searchUrl,
 			headers: {
 				auth_token: 'b0993c5fbee380615cad20627a188801'
 			}
@@ -34,7 +34,7 @@ module.exports = {
 			}
 		}
 
-		request(options, callback);
+		request.get(options, callback);
 	},
 
 };
