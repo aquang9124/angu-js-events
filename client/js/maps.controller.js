@@ -21,9 +21,11 @@
 
 		// Function implementations
 		function findCrimes() {
+			vm.loading = true;
 			var crimesPromise = Search.find(vm.newSearch);
 			crimesPromise.then(function(result) {
 				vm.crimeData = result;
+				vm.loading = false;
 				vm.initMap(vm.newSearch);
 			});
 		}

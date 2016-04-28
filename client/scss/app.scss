@@ -177,7 +177,6 @@ hr {
 	min-width: 200px;
 	height: 100%;
 	width: 100%;
-	
 }
 
 #crime-outer {
@@ -185,6 +184,13 @@ hr {
 	width: 50%;
 	padding: 3.5em 2.5em;
 	margin-top: 2em;
+}
+
+#loader {
+	height: 100% !important;
+	width: 100% !important;
+	background: url('/img/giphy.gif') center center no-repeat fixed;
+	@include bg-cover();
 }
 
 // Media Queries
