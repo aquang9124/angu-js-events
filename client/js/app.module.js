@@ -4,8 +4,13 @@
 		.config(function($routeProvider) {
 			$routeProvider
 			.when('/', {
-				templateUrl: 'partials/home_alt.html',
+				templateUrl: 'partials/main.html',
 				controller: 'homeCtrl',
+				controllerAs: 'vm'
+			})
+			.when('/counts', {
+				templateUrl: 'partials/counts.html',
+				controller: 'countsCtrl',
 				controllerAs: 'vm'
 			})
 			.when('/posts', {

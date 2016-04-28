@@ -4,8 +4,13 @@
 		.config(function($routeProvider) {
 			$routeProvider
 			.when('/', {
-				templateUrl: 'partials/home_alt.html',
+				templateUrl: 'partials/main.html',
 				controller: 'homeCtrl',
+				controllerAs: 'vm'
+			})
+			.when('/counts', {
+				templateUrl: 'partials/counts.html',
+				controller: 'countsCtrl',
 				controllerAs: 'vm'
 			})
 			.when('/posts', {
@@ -881,6 +886,9 @@
 
 		// Bound variables
 		
+		// Function implementations
+
+
 	}
 
 } )(angular);
@@ -901,21 +909,34 @@
 		vm.cIndex = 0;
 		vm.crimeData = [];
 		vm.place;
+		vm.placeSearch;
 		vm.autocomplete;
 		vm.newSearch = {
 			radius: 3,
 		};
+		vm.componentForm = {
+			street_number: 'short_name',
+			route: 'long_name',
+			locality: 'long_name',
+  			administrative_area_level_1: 'short_name'
+		};
+		vm.newAddress = {};
 		vm.categories = Category.categories;
 		vm.switchHeaders = switchHeaders;
 		vm.startSearch = startSearch;
 		vm.typeText = typeText;
 		vm.initAutocomplete = initAutocomplete;
+		vm.initAutoComp = initAutoComp;
 		vm.getAddress = getAddress;
 
 		// Watches
 		$scope.$watch('vm.newSearch', function() {
 			Search.newSearch = vm.newSearch;
 		});
+		
+		$scope.$watch('vm.newAddress', function() {
+			Search.newAddress = vm.newAddress;
+		})
 
 		// Function implementations
 
@@ -934,7 +955,8 @@
 		// Function that changes the view over to the posts partial
 		function startSearch() {
 			// $location.path('/maps');
-			$location.path('/posts');
+			// $location.path('/posts');
+			console.log(vm.newAddress);
 		}
 
 		// Function that types out the text in the directions div
@@ -980,6 +1002,29 @@
 				// Otherwise we console log that no geo data was found.
 				console.log('No geometry data found');
 			}
+		}
+
+		function initAutoComp() {
+			vm.autocomplete = new google.maps.places.Autocomplete(
+				(document.getElementById('autocomplete')),
+      			{types: ['geocode']});
+
+			vm.autocomplete.addListener('place_changed', splitAddress);
+		}
+
+		// This function executes whenever the place_changed event fires
+		function splitAddress() {
+			var place = vm.autocomplete.getPlace();
+			
+			for (var i = 0; i < place.address_components.length; i++) {
+				var addressType = place.address_components[i].types[0];
+
+				if (vm.componentForm[addressType]) {
+					var val = place.address_components[i][vm.componentForm[addressType]];
+					vm.newAddress[addressType] = val;
+				}
+			}
+
 		}
 
 		// Function calls
@@ -1249,8 +1294,10 @@
 	function Search($http) {
 		var crimeData = [];
 		var newSearch = {};
+		var newAddress = {};
 		var factory = {
 			newSearch: newSearch,
+			newAddress: newAddress,
 			crimeData: crimeData,
 			find: find,
 			retrieve: retrieve,

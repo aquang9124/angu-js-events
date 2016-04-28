@@ -6,8 +6,10 @@
 	function Search($http) {
 		var crimeData = [];
 		var newSearch = {};
+		var newAddress = {};
 		var factory = {
 			newSearch: newSearch,
+			newAddress: newAddress,
 			crimeData: crimeData,
 			find: find,
 			retrieve: retrieve,

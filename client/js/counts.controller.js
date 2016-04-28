@@ -8,6 +8,9 @@
 
 		// Bound variables
 		
+		// Function implementations
+
+
 	}
 
 } )(angular);
