@@ -3,7 +3,7 @@
 		.module('myApp')
 		.controller('mapsCtrl', mapsCtrl);
 
-	function mapsCtrl($scope, Search) {
+	function mapsCtrl($scope, Search, Category) {
 		var vm = this;
 
 		// Bound variables
@@ -18,6 +18,7 @@
 		// Function calls
 		angular.element(document).ready(function() {
 			vm.getTaps();
+			// vm.findCrimes();
 		});
 
 		// Function implementations
@@ -32,7 +33,10 @@
 		}
 
 		function getTaps() {
-			Search.retrieve();
+			var tapsPromise = Category.retrieve(vm.newSearch);
+			tapsPromise.then(function(result) {
+				console.log(result);
+			});
 		}
 
 		function initMap(newSearch) {

@@ -1,0 +1,40 @@
+<div class="container" id="crime-outer">
+	<div class="row">
+		<div class="col-md-12">
+			<h2 class="text-center" id="spc-heading" ng-click="vm.switchHeaders()">{{ vm.header[vm.cIndex].message | uppercase }}</h2>
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div id="directions">
+				<p id="direction-text" ng-bind-html="vm.instructions"></p>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<hr>
+			<form>
+				<div class="form-group">
+					<label>Category:</label>
+					<select ng-model="vm.newSearch.category" class="form-control">
+						<option value="" >--- Please Choose A Category ---</option>
+						<option ng-repeat="category in vm.categories" value="{{category.code}}">{{ category.name }} ({{ category.group_name }})</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Address:</label>
+					<input type="text" id="autocomplete" ng-model="vm.newSearch.address" ng-click="vm.initAutocomplete()" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>Search Radius (Miles): <span ng-if="vm.newSearch.radius === undefined">&nbsp;3</span>&nbsp;{{ vm.newSearch.radius }}</label>
+					<input type="range" ng-model="vm.newSearch.radius" step="1" min="1" max="5">
+				</div>
+				<div class="form-group text-center">
+					<button class="btn btn-crimes" ng-click="vm.startSearch()">Find Crime</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

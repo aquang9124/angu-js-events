@@ -13,10 +13,10 @@ module.exports = {
 	},
 
 	retrieve: function(req, res) {
-		var searchUrl = 'http://search.3taps.com';
-		var refUrl = 'http://reference.3taps.com/category_groups';
+		var searchUrl = 'http://search.3taps.com/category=' + req.body.category;
+		var refUrl = 'http://reference.3taps.com/categories';
 		var options = {
-			url: searchUrl,
+			url: refUrl,
 			headers: {
 				auth_token: 'b0993c5fbee380615cad20627a188801'
 			}

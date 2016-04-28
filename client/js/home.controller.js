@@ -3,12 +3,12 @@
 		.module('myApp')
 		.controller('homeCtrl', homeCtrl);
 
-	function homeCtrl($scope, $interval, $location, Search) {
+	function homeCtrl($scope, $interval, $location, Search, Category) {
 		var vm = this;
 
 		// Bound variables
-		vm.header = [{ message: 'Crime Map' }, { message: 'With Google Maps' }];
-		vm.words = ["Hello!    ", "Fill out the form below to get crime information!    "];
+		vm.header = [{ message: 'Postings Map' }, { message: 'With Google Maps' }];
+		vm.words = ["Hello!    ", "Fill out the form below to get information about the chosen category!    "];
 		vm.wordCount = 0;
 		vm.charCount = 0;
 		vm.instructions = "";
@@ -19,6 +19,7 @@
 		vm.newSearch = {
 			radius: 3,
 		};
+		vm.categories = Category.categories;
 		vm.switchHeaders = switchHeaders;
 		vm.startSearch = startSearch;
 		vm.typeText = typeText;
@@ -43,7 +44,8 @@
 		}
 
 		function startSearch() {
-			$location.path('/maps');
+			// $location.path('/maps');
+			console.log(vm.newSearch);
 		}
 
 		function typeText() {

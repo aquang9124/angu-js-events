@@ -4,7 +4,7 @@
 		.config(function($routeProvider) {
 			$routeProvider
 			.when('/', {
-				templateUrl: 'partials/home.html',
+				templateUrl: 'partials/home_alt.html',
 				controller: 'homeCtrl',
 				controllerAs: 'vm'
 			})
