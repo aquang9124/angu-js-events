@@ -10,6 +10,7 @@
     "gulp-sass": "^2.3.1",
     "gulp-uglify": "^1.5.3",
     "mongoose": "^4.4.12",
+    "spotcrime": "0.0.4",
     "unirest": "^0.4.2"
   }
 }

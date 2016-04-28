@@ -111,8 +111,6 @@
 			{
 				vm.newSearch.lat = vm.place.geometry.location.lat();
 				vm.newSearch.lng = vm.place.geometry.location.lng();
-				console.log(vm.newSearch.lat);
-				console.log(vm.newSearch.lng);
 			}
 			else
 			{

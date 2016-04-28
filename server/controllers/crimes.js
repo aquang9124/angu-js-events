@@ -10,4 +10,5 @@ module.exports = {
 			res.json(result.body);
 		});
 	},
+
 };
