@@ -10,6 +10,7 @@
 			newSearch: newSearch,
 			crimeData: crimeData,
 			find: find,
+			retrieve: retrieve,
 		};
 		return factory;
 
@@ -19,6 +20,16 @@
 					crimeData = res.data;
 					return res.data;
 				}, 
+				function(res) {
+					console.log(res);
+				});
+		}
+
+		function retrieve() {
+			return $http.get('/tapdata')
+				.then(function(res) {
+					return res;
+				},
 				function(res) {
 					console.log(res);
 				});

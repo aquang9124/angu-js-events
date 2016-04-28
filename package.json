@@ -6,11 +6,9 @@
     "express": "^4.13.4",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
-    "gulp-ng-annotate": "^2.0.0",
     "gulp-sass": "^2.3.1",
-    "gulp-uglify": "^1.5.3",
     "mongoose": "^4.4.12",
-    "spotcrime": "0.0.4",
+    "request": "^2.72.0",
     "unirest": "^0.4.2"
   }
 }

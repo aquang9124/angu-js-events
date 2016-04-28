@@ -12,11 +12,12 @@
 		vm.markers = [];
 		vm.newSearch = Search.newSearch;
 		vm.findCrimes = findCrimes;
+		vm.getTaps = getTaps;
 		vm.initMap = initMap;
 
 		// Function calls
 		angular.element(document).ready(function() {
-			vm.findCrimes();
+			vm.getTaps();
 		});
 
 		// Function implementations
@@ -28,6 +29,10 @@
 				vm.loading = false;
 				vm.initMap(vm.newSearch);
 			});
+		}
+
+		function getTaps() {
+			Search.retrieve();
 		}
 
 		function initMap(newSearch) {

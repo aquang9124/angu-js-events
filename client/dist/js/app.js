@@ -165,11 +165,12 @@
 		vm.markers = [];
 		vm.newSearch = Search.newSearch;
 		vm.findCrimes = findCrimes;
+		vm.getTaps = getTaps;
 		vm.initMap = initMap;
 
 		// Function calls
 		angular.element(document).ready(function() {
-			vm.findCrimes();
+			vm.getTaps();
 		});
 
 		// Function implementations
@@ -181,6 +182,10 @@
 				vm.loading = false;
 				vm.initMap(vm.newSearch);
 			});
+		}
+
+		function getTaps() {
+			Search.retrieve();
 		}
 
 		function initMap(newSearch) {
@@ -314,6 +319,7 @@
 			newSearch: newSearch,
 			crimeData: crimeData,
 			find: find,
+			retrieve: retrieve,
 		};
 		return factory;
 
@@ -323,6 +329,16 @@
 					crimeData = res.data;
 					return res.data;
 				}, 
+				function(res) {
+					console.log(res);
+				});
+		}
+
+		function retrieve() {
+			return $http.get('/tapdata')
+				.then(function(res) {
+					return res;
+				},
 				function(res) {
 					console.log(res);
 				});

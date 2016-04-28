@@ -1,4 +1,5 @@
 var unirest = require('unirest');
+var request = require('request');
 var mashKey = "bDPDcJeR9BmshPk8xl2oUBZ4mM14p1xzufRjsnWu3DBQ4E9fq0";
 
 module.exports = {
@@ -9,6 +10,31 @@ module.exports = {
 		.end(function (result) {
 			res.json(result.body);
 		});
+	},
+
+	retrieve: function(req, res) {
+		var searchUrl = 'http://search.3taps.com';
+		var refUrl = 'http://reference.3taps.com/category_groups';
+		var options = {
+			url: searchUrl,
+			headers: {
+				auth_token: 'b0993c5fbee380615cad20627a188801'
+			}
+		};
+
+		function callback(err, response, body) {
+			if (!err && response.statusCode == 200)
+			{
+				console.log(body);
+				res.json(body);
+			}
+			else
+			{
+				res.json(err);
+			}
+		}
+
+		request(options, callback);
 	},
 
 };
