@@ -1,6 +1,7 @@
 var unirest = require('unirest');
 var request = require('request');
 var mashKey = "bDPDcJeR9BmshPk8xl2oUBZ4mM14p1xzufRjsnWu3DBQ4E9fq0";
+var authToken = 'b0993c5fbee380615cad20627a188801';
 
 module.exports = {
 	show: function(req, res) {
@@ -13,12 +14,14 @@ module.exports = {
 	},
 
 	retrieve: function(req, res) {
-		var searchUrl = 'http://search.3taps.com/category=' + req.body.category;
+		var searchUrl = 'http://search.3taps.com?category=' + req.body.category;
+		console.log(searchUrl);
 		var refUrl = 'http://reference.3taps.com/categories';
 		var options = {
+			method: 'GET',
 			url: searchUrl,
 			headers: {
-				auth_token: 'b0993c5fbee380615cad20627a188801'
+				auth_token: authToken
 			}
 		};
 
@@ -34,7 +37,7 @@ module.exports = {
 			}
 		}
 
-		request.get(options, callback);
+		request(options, callback);
 	},
 
 };

@@ -33,6 +33,7 @@
 		}
 
 		function getTaps() {
+			console.log(vm.newSearch);
 			var tapsPromise = Category.retrieve(vm.newSearch);
 			tapsPromise.then(function(result) {
 				console.log(result);

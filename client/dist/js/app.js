@@ -34,7 +34,7 @@
 		.module('myApp')
 		.factory('Category', Category);
 
-	function Category() {
+	function Category($http) {
 		var categories = [
 	        {
 	            "code": "APET",
@@ -858,6 +858,9 @@
 				.then(function(result) {
 					postings = result;
 					return result;
+				},
+				function(err) {
+					return err;
 				});
 		}
 	}
@@ -909,8 +912,7 @@
 		}
 
 		function startSearch() {
-			// $location.path('/maps');
-			console.log(vm.newSearch);
+			$location.path('/maps');
 		}
 
 		function typeText() {
@@ -1022,6 +1024,7 @@
 		}
 
 		function getTaps() {
+			console.log(vm.newSearch);
 			var tapsPromise = Category.retrieve(vm.newSearch);
 			tapsPromise.then(function(result) {
 				console.log(result);

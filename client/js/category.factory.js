@@ -3,7 +3,7 @@
 		.module('myApp')
 		.factory('Category', Category);
 
-	function Category() {
+	function Category($http) {
 		var categories = [
 	        {
 	            "code": "APET",

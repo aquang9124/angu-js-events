@@ -44,8 +44,7 @@
 		}
 
 		function startSearch() {
-			// $location.path('/maps');
-			console.log(vm.newSearch);
+			$location.path('/maps');
 		}
 
 		function typeText() {
