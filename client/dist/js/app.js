@@ -8,6 +8,11 @@
 				controller: 'homeCtrl',
 				controllerAs: 'vm'
 			})
+			.when('/posts', {
+				templateUrl: 'partials/map_alt.html',
+				controller: 'postsCtrl',
+				controllerAs: 'vm'
+			})
 			.when('/maps', {
 				templateUrl: 'partials/maps.html',
 				controller: 'mapsCtrl',
@@ -856,11 +861,11 @@
 		function retrieve(newSearch) {
 			return $http.post('/tapdata', { category: newSearch.category, radius: newSearch.radius, lat: newSearch.lat, long: newSearch.lng })
 				.then(function(result) {
-					postings = result;
-					return result;
+					postings = JSON.parse(result.data);
+					return JSON.parse(result.data);
 				},
 				function(err) {
-					return err;
+					console.log(err);
 				});
 		}
 	}
@@ -999,12 +1004,14 @@
 
 		// Bound variables
 		vm.crimeData = [];
+		vm.taps = [];
 		vm.map;
 		vm.markers = [];
 		vm.newSearch = Search.newSearch;
 		vm.findCrimes = findCrimes;
 		vm.getTaps = getTaps;
 		vm.initMap = initMap;
+		vm.initAltMap = initAltMap;
 
 		// Function calls
 		angular.element(document).ready(function() {
@@ -1024,10 +1031,14 @@
 		}
 
 		function getTaps() {
-			console.log(vm.newSearch);
+			vm.newSearch.radius = vm.newSearch.radius + 'mi';
+			vm.loading = true;
 			var tapsPromise = Category.retrieve(vm.newSearch);
 			tapsPromise.then(function(result) {
-				console.log(result);
+				console.log(result.postings);
+				vm.taps = result.postings;
+				vm.loading = false;
+				vm.initAltMap(vm.newSearch);
 			});
 		}
 
@@ -1055,6 +1066,25 @@
 				var crimeDesc = vm.crimeData[crime].description;
 
 				addMarker(crimeLoc, crimeDesc);
+			}
+		}
+
+		function initAltMap(newSearch) {
+			var mapCenter = new google.maps.LatLng(newSearch.lat, newSearch.lng);
+			var mapOptions = {
+				center: mapCenter,
+				zoom: 13,
+				draggable: true,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+
+			vm.map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+			for (var tap in vm.taps) {
+				var tapLoc = new google.maps.LatLng(vm.taps[tap].location.lat, vm.taps[tap].location.long);
+				var postHeading = vm.taps[tap].heading;
+
+				addMarker(tapLoc, postHeading);
 			}
 		}
 

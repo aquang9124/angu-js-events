@@ -825,11 +825,11 @@
 		function retrieve(newSearch) {
 			return $http.post('/tapdata', { category: newSearch.category, radius: newSearch.radius, lat: newSearch.lat, long: newSearch.lng })
 				.then(function(result) {
-					postings = result;
-					return result;
+					postings = JSON.parse(result.data);
+					return JSON.parse(result.data);
 				},
 				function(err) {
-					return err;
+					console.log(err);
 				});
 		}
 	}

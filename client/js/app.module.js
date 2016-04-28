@@ -8,6 +8,11 @@
 				controller: 'homeCtrl',
 				controllerAs: 'vm'
 			})
+			.when('/posts', {
+				templateUrl: 'partials/map_alt.html',
+				controller: 'postsCtrl',
+				controllerAs: 'vm'
+			})
 			.when('/maps', {
 				templateUrl: 'partials/maps.html',
 				controller: 'mapsCtrl',

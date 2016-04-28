@@ -14,7 +14,7 @@ module.exports = {
 	},
 
 	retrieve: function(req, res) {
-		var searchUrl = 'http://search.3taps.com?category=' + req.body.category;
+		var searchUrl = 'http://search.3taps.com?rpp=100&category=' + req.body.category + '&lat=' + req.body.lat + '&long=' + req.body.long + '&radius=' + req.body.radius;
 		console.log(searchUrl);
 		var refUrl = 'http://reference.3taps.com/categories';
 		var options = {
