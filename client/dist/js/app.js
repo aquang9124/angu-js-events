@@ -141,6 +141,11 @@
 		vm.findCrimes = findCrimes;
 		vm.initMap = initMap;
 
+		// Function calls
+		angular.element(document).ready(function() {
+			vm.findCrimes();
+		});
+
 		// Function implementations
 		function findCrimes() {
 			var crimesPromise = Search.find(vm.newSearch);
@@ -196,10 +201,6 @@
 			vm.markers.push(marker);
 		}
 
-		// Function calls
-		angular.element(document).ready(function() {
-			vm.findCrimes();
-		});
 	}
 
 } )(angular);
