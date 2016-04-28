@@ -874,6 +874,19 @@
 ( function(angular) {
 	angular
 		.module('myApp')
+		.controller('countsCtrl', countsCtrl);
+
+	function countsCtrl($scope, Search) {
+		var vm = this;
+
+		// Bound variables
+		
+	}
+
+} )(angular);
+( function(angular) {
+	angular
+		.module('myApp')
 		.controller('homeCtrl', homeCtrl);
 
 	function homeCtrl($scope, $interval, $location, Search, Category) {
