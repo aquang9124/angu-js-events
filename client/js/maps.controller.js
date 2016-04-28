@@ -36,21 +36,29 @@
 			vm.map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
 			for (var crime in vm.crimeData) {
-				var crimeLoc = new google.maps.LatLng(vm.crimeData[crime].long, vm.crimeData[crime].lat);
-				addMarker(crimeLoc);
+				var crimeLoc = new google.maps.LatLng(vm.crimeData[crime].lat, vm.crimeData[crime].long);
+				var crimeDesc = vm.crimeData[crime].description;
+				addMarker(crimeLoc, crimeDesc);
 			}
 		}
 
-		function addMarker(crimeLoc) {
+		function addMarker(crimeLoc, crimeDesc) {
 			var marker = new google.maps.Marker({
 				position: crimeLoc,
 				map: vm.map,
-				title: "Crime Location"
+				title: "Crime Location",
+				clickable: true
+			});
+
+			marker.info = new google.maps.InfoWindow({
+				content: "<div>" + crimeDesc + "</div>"
+			});
+
+			google.maps.event.addListener(marker, 'click', function() {
+				marker.info.open(vm.map, marker);
 			});
 
 			vm.markers.push(marker);
-			marker.setMap(vm.map);
-
 		}
 
 		function setMapOnAll(map) {
@@ -60,7 +68,9 @@
 		}
 
 		// Function calls
-		google.maps.event.addDomListener(window, 'load', vm.findCrimes());
+		angular.element(document).ready(function() {
+			vm.findCrimes();
+		});
 	}
 
 } )(angular);
