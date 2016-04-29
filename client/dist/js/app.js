@@ -887,7 +887,10 @@
 		// Bound variables
 		vm.newAddress = Search.newAddress;
 		vm.countsData = [];
+		vm.locale;
 		vm.getCount = getCount;
+		vm.makeValid = makeValid;
+		vm.findLatLng = findLatLng;
 
 		// Function Calls
 		angular.element(document).ready(function() {
@@ -895,17 +898,53 @@
 		});
 
 		// Function implementations
+
+		// Function to get the data from counted API
 		function getCount() {
 			vm.loading = true;
 			var countsPromise = Count.find(vm.newAddress);
 
 			countsPromise.then(function(result) {
-
 				vm.countsData = result;
-				console.log(result);
-				
+				vm.makeValid();
+				console.log(vm.countsData);
 			});
+
+			vm.findLatLng();
+			vm.countsData = Count.countData;
+			console.log(vm.countsData);
 		}
+
+		// Makes the addresses returned from the counted API valid addresses
+		function makeValid() {
+			for (var item in vm.countsData) {
+				var splitAddress = vm.countsData[item].address.split(" ");
+				var validAddress = [];
+				for (var i = 0; i < splitAddress.length; i++) {
+					if (splitAddress[i] !== 'and')
+					{
+						validAddress.push(splitAddress[i]);
+					}
+					else
+					{
+						vm.countsData[item].address = validAddress.join(" ");
+						break;
+					}
+				}
+			}
+
+			return true;
+		}
+
+		// Function to find and add lat and lng to each object in counted array
+		function findLatLng() {
+			for (var i = 0; i < vm.countsData.length; i++) {
+				Count.retrieveLoc(vm.countsData, i);
+			}
+
+			return true;
+		}	
+	
 
 	}
 
@@ -920,6 +959,7 @@
 		var factory = {
 			countData: countData,
 			find: find,
+			retrieveLoc: retrieveLoc,
 		};
 
 		return factory;
@@ -934,6 +974,17 @@
 					function(err) {
 						console.log(err);
 					});
+		}
+
+		function retrieveLoc(countsData, index) {
+			$http.get('http://maps.googleapis.com/maps/api/geocode/json?address=' + countsData[index].address + '&key=AIzaSyB99XQamcdZpKoSal7Jx5BX0zw96xVJEhM')
+				.then(function(result) {
+					countData[index].lat = result.results.geometry.location.lat;
+					countData[index].lng = result.results.geometry.location.lng;
+				},
+				function(err) {
+					console.log(err);
+				});
 		}
 	}
 

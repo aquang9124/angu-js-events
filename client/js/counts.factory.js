@@ -8,6 +8,7 @@
 		var factory = {
 			countData: countData,
 			find: find,
+			retrieveLoc: retrieveLoc,
 		};
 
 		return factory;
@@ -22,6 +23,16 @@
 					function(err) {
 						console.log(err);
 					});
+		}
+
+		function retrieveLoc(countsData, index) {
+			$http.get('/geodata', { address: countsData[index].address })
+				.then(function(result) {
+					console.log(result);
+				},
+				function(err) {
+					console.log(err);
+				});
 		}
 	}
 
