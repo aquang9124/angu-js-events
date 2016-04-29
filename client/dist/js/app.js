@@ -897,6 +897,12 @@
 		vm.countLatinos = 0;
 		vm.countBlacks = 0;
 		vm.countUnknown = 0;
+		vm.knife = 0;
+		vm.none = 0;
+		vm.gun = 0;
+		vm.car = 0;
+		vm.bbgun = 0;
+		vm.mystery = 0;
 		vm.locale;
 		vm.getCount = getCount;
 		vm.makeValid = makeValid;
@@ -963,17 +969,50 @@
 					chart: {
 						type: 'pie'
 					},
+					plotOptions: {
+						pie: {
+							allowPointSelect: true,
+							cursor: 'pointer',
+							showInLegend: true
+						},
+					},
 					tooltip: {
-						style: {
-							padding: 10,
-							fontWeight: 'bold'
-						}
+						enabled: false
 					}
 				},
 				//The below properties are watched separately for changes.
 
 				//Series object (optional) - a list of series using normal Highcharts series options.
-				series: [{ 
+				series: [{
+					name: 'Armed With',
+					colorByPoint: true,
+					data: [{
+						name: 'Unarmed',
+						y: vm.none,
+						color: '#006600'
+					}, {
+						name: 'Firearm',
+						y: vm.gun,
+						color: '#66ff99'
+					}, {
+						name: 'Non-lethal Firearm',
+						y: vm.bbgun,
+						color: '#ff3300'
+					}, {
+						name: 'Vehicle',
+						y: vm.car,
+						color: '#8000ff'
+					}, {
+						name: 'Knife',
+						y: vm.knife,
+						color: '#ffccff'
+					}, {
+						name: 'Mystery',
+						y: vm.mystery,
+						color: '#009999'
+					}]
+				},	
+				{ 
 					name: 'Ethnicity',
 					colorByPoint: true,
 					data: [{
@@ -1037,6 +1076,33 @@
 				else
 				{
 					vm.countUnknown += 1;
+				}
+			}
+
+			for (var data in vm.countsData) {
+				if (vm.countsData[data].armed === "No")
+				{
+					vm.none += 1;
+				}
+				else if (vm.countsData[data].armed === "Knife")
+				{
+					vm.knife += 1;
+				}
+				else if (vm.countsData[data].armed === "Firearm")
+				{
+					vm.gun += 1;
+				}
+				else if (vm.countsData[data].armed === "Non-lethal firearm")
+				{
+					vm.bbgun += 1;
+				}
+				else if (vm.countsData[data].armed === "Vehicle")
+				{
+					vm.car += 1;
+				}
+				else
+				{
+					vm.mystery += 1;
 				}
 			}
 
