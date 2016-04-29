@@ -8,6 +8,7 @@
 
 		// Bound variables
 		vm.newAddress = Search.newAddress;
+		vm.countsData = [];
 		vm.getCount = getCount;
 
 		// Function Calls
@@ -19,6 +20,13 @@
 		function getCount() {
 			vm.loading = true;
 			var countsPromise = Count.find(vm.newAddress);
+
+			countsPromise.then(function(result) {
+
+				vm.countsData = result;
+				console.log(result);
+				
+			});
 		}
 
 	}

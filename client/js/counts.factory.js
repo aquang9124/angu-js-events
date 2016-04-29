@@ -15,10 +15,9 @@
 		// function implementations
 		function find(newAddress) {
 			return $http.post('/counts', { state: newAddress.administrative_area_level_1, city: newAddress.locality })
-				.then(
-					function(result) {
-						countData = result;
-						return result;
+				.then(function(result) {
+						countData = JSON.parse(result.data);
+						return JSON.parse(result.data);
 					},
 					function(err) {
 						console.log(err);

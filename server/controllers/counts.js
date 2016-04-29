@@ -2,7 +2,7 @@ var request = require('request');
 
 module.exports = {
 	show: function(req, res) {
-		var countedUrl = 'http://thecountedapi.com/api/counted';
+		var countedUrl = 'http://thecountedapi.com/api/counted?state=' + req.body.state + '&city=' + req.body.city;
 		var options = {
 			method: 'GET',
 			url: countedUrl

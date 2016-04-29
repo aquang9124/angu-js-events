@@ -886,6 +886,7 @@
 
 		// Bound variables
 		vm.newAddress = Search.newAddress;
+		vm.countsData = [];
 		vm.getCount = getCount;
 
 		// Function Calls
@@ -897,6 +898,13 @@
 		function getCount() {
 			vm.loading = true;
 			var countsPromise = Count.find(vm.newAddress);
+
+			countsPromise.then(function(result) {
+
+				vm.countsData = result;
+				console.log(result);
+				
+			});
 		}
 
 	}
@@ -918,8 +926,14 @@
 
 		// function implementations
 		function find(newAddress) {
-			console.log(newAddress.administrative_area_level_1);
-			console.log(newAddress.locality);
+			return $http.post('/counts', { state: newAddress.administrative_area_level_1, city: newAddress.locality })
+				.then(function(result) {
+						countData = JSON.parse(result.data);
+						return JSON.parse(result.data);
+					},
+					function(err) {
+						console.log(err);
+					});
 		}
 	}
 
