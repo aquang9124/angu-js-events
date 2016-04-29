@@ -892,17 +892,23 @@
 		vm.newSearch = Search.newSearch;
 		vm.newAddress = Search.newAddress;
 		vm.countsData = [];
+		vm.countWhites = 0;
+		vm.countAsians = 0;
+		vm.countLatinos = 0;
+		vm.countBlacks = 0;
+		vm.countUnknown = 0;
 		vm.locale;
 		vm.getCount = getCount;
 		vm.makeValid = makeValid;
 		vm.findLatLng = findLatLng;
 		vm.initMap = initMap;
 		vm.getData = getData;
+		vm.convertData = convertData;
 
 		// Function Calls
 		angular.element(document).ready(function() {
-			// vm.getData();
-			vm.getCount();
+			vm.getData();
+			// vm.getCount();
 		});
 
 		// Function implementations
@@ -945,50 +951,96 @@
 
 			dataPromise.then(function(result) {
 				vm.countsData = result;
+				vm.convertData();
 				vm.loading = false;
 
 				//This is not a highcharts object. It just looks a little like one!
 				vm.chartConfig = {
 
-				  options: {
-				      //This is the Main Highcharts chart config. Any Highchart options are valid here.
-				      //will be overriden by values specified below.
-				      chart: {
-				          type: 'bar'
-				      },
-				      tooltip: {
-				          style: {
-				              padding: 10,
-				              fontWeight: 'bold'
-				          }
-				      }
-				  },
-				  //The below properties are watched separately for changes.
+				options: {
+					//This is the Main Highcharts chart config. Any Highchart options are valid here.
+					//will be overriden by values specified below.
+					chart: {
+						type: 'pie'
+					},
+					tooltip: {
+						style: {
+							padding: 10,
+							fontWeight: 'bold'
+						}
+					}
+				},
+				//The below properties are watched separately for changes.
 
-				  //Series object (optional) - a list of series using normal Highcharts series options.
-				  series: [{
-				     data: [10, 15, 12, 8, 7]
-				  }],
-				  //Title configuration (optional)
-				  title: {
-				     text: 'Hello'
-				  },
-				  //Boolean to control showing loading status on chart (optional)
-				  //Could be a string if you want to show specific loading text.
-				  loading: false,
-				  //Configuration for the xAxis (optional). Currently only one x axis can be dynamically controlled.
-				  //properties currentMin and currentMax provided 2-way binding to the chart's maximum and minimum
-				  xAxis: {
-				  currentMin: 0,
-				  currentMax: 20,
-				  title: {text: 'values'}
-				  },
-				  //Whether to use Highstocks instead of Highcharts (optional). Defaults to false.
-				  useHighStocks: false,
-				  //size (optional) if left out the chart will default to size of the div or something sensible.
-				  //function (optional)
-				};
+				//Series object (optional) - a list of series using normal Highcharts series options.
+				series: [{ 
+					name: 'Ethnicity',
+					colorByPoint: true,
+					data: [{
+						name: 'Hispanic/Latino',
+						y: vm.countLatinos
+					}, {
+						name: 'Black',
+						y: vm.countBlacks
+					}, {
+						name: 'Asian/Pacific Islander',
+						y: vm.countAsians
+					}, {
+						name: 'White',
+						y: vm.countWhites
+					}, {
+						name: 'Unknown',
+						y: vm.countUnknown
+					}] 
+				}],
+				//Title configuration (optional)
+				title: {
+					text: 'Graphs'
+				},
+				//Boolean to control showing loading status on chart (optional)
+				//Could be a string if you want to show specific loading text.
+				loading: false,
+				//Configuration for the xAxis (optional). Currently only one x axis can be dynamically controlled.
+				//properties currentMin and currentMax provided 2-way binding to the chart's maximum and minimum
+				xAxis: {
+					currentMin: 0,
+					currentMax: 20,
+					title: {text: 'values'}
+				},
+				//Whether to use Highstocks instead of Highcharts (optional). Defaults to false.
+				useHighStocks: false,
+				//size (optional) if left out the chart will default to size of the div or something sensible.
+				//function (optional)
+			};
 			});
+		}
+
+		// Function to convert the JSON data into numbers for use with pie chart
+		function convertData() {
+			for (var data in vm.countsData) {
+				if (vm.countsData[data].race === "White")
+				{
+					vm.countWhites += 1;
+				}
+				else if (vm.countsData[data].race === "Hispanic/Latino")
+				{
+					vm.countLatinos += 1;
+				}
+				else if (vm.countsData[data].race === "Black")
+				{
+					vm.countBlacks += 1;
+				}
+				else if (vm.countsData[data].race === "Asian/Pacific Islander")
+				{
+					vm.countAsians += 1;
+				}
+				else
+				{
+					vm.countUnknown += 1;
+				}
+			}
+
+			return true;
 		}
 
 		// Makes the addresses returned from the counted API valid addresses
@@ -1086,7 +1138,7 @@
 
 		// function implementations
 		function find(newAddress) {
-			return $http.post('/counts', { state: newAddress.administrative_area_level_1, city: newAddress.locality })
+			return $http.post('/counts', { state: newAddress.administrative_area_level_1 })
 				.then(function(result) {
 						countData = JSON.parse(result.data);
 						return JSON.parse(result.data);
