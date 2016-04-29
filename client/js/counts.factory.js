@@ -9,6 +9,7 @@
 			countData: countData,
 			find: find,
 			retrieveLoc: retrieveLoc,
+			grab: grab,
 		};
 
 		return factory;
@@ -30,6 +31,7 @@
 			$http.post('/geodata', { address: countsData[index].address })
 				.then(function(result) {
 					var item = JSON.parse(result.data);
+					var latLng = {};
 					countData[index].lat = item.results[0].geometry.location.lat;
 					countData[index].lng = item.results[0].geometry.location.lng;
 					console.log(countData[index]);
@@ -38,6 +40,11 @@
 					console.log(err);
 				});
 		}
+
+		function grab() {
+			return countData;
+		}
+
 	}
 
 } )(angular);

@@ -32,12 +32,13 @@
 					vm.makeValid();
 					console.log(vm.countsData);
 					vm.findLatLng();
-					vm.countsData = Count.countData;
-					console.log(vm.countsData);
+					vm.myData = Count.grab();
+				})
+				.then(function(res) {
+					console.log(res);
+					console.log('hi');
+					console.log(vm.myData);
 				});
-
-			
-			
 		}
 
 		// Makes the addresses returned from the counted API valid addresses

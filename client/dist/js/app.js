@@ -910,12 +910,13 @@
 					vm.makeValid();
 					console.log(vm.countsData);
 					vm.findLatLng();
-					vm.countsData = Count.countData;
-					console.log(vm.countsData);
+					vm.myData = Count.grab();
+				})
+				.then(function(res) {
+					console.log(res);
+					console.log('hi');
+					console.log(vm.myData);
 				});
-
-			
-			
 		}
 
 		// Makes the addresses returned from the counted API valid addresses
@@ -963,6 +964,7 @@
 			countData: countData,
 			find: find,
 			retrieveLoc: retrieveLoc,
+			grab: grab,
 		};
 
 		return factory;
@@ -984,6 +986,7 @@
 			$http.post('/geodata', { address: countsData[index].address })
 				.then(function(result) {
 					var item = JSON.parse(result.data);
+					var latLng = {};
 					countData[index].lat = item.results[0].geometry.location.lat;
 					countData[index].lng = item.results[0].geometry.location.lng;
 					console.log(countData[index]);
@@ -992,6 +995,11 @@
 					console.log(err);
 				});
 		}
+
+		function grab() {
+			return countData;
+		}
+
 	}
 
 } )(angular);
