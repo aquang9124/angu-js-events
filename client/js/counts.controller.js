@@ -35,14 +35,13 @@
 				.then(function(result) {
 					vm.countsData = result;
 					vm.makeValid();
-					console.log(vm.countsData);
 					vm.findLatLng();
 					var promise = new Promise(function(resolve, reject) {
-						var data = Count.grab();
+						vm.myData = Count.grab();
 
-						if (data) 
+						if (vm.myData) 
 						{
-							resolve(data);
+							resolve(vm.myData);
 						}
 						else
 						{
@@ -52,9 +51,9 @@
 					promise
 						.then(function(result) {
 							console.log(result);
+							vm.initMap(result);
 							vm.loading = false;
-							vm.initMap();
-					});
+						});
 				});
 		}
 
@@ -89,7 +88,7 @@
 		}
 
 		// Initializes google maps
-		function initMap() {
+		function initMap(locData) {
 			console.log(vm.newSearch);
 			var mapCenter = new google.maps.LatLng(vm.newSearch.lat, vm.newSearch.lng);
 			var mapOptions = {
@@ -101,9 +100,11 @@
 
 			vm.map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
-			for (var data in vm.myData) {
-				console.log(vm.myData[data].lat);
-				var location = new google.maps.LatLng(vm.myData[data].lat, vm.myData[data].lng);
+			for (var data in locData) {
+				console.log(locData[data]);
+				console.log(locData[data].long);
+				console.log(locData[data].age);
+				var location = new google.maps.LatLng(locData[data].lat, locData[data].lng);
 
 				addMarker(location);
 			}

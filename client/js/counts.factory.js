@@ -27,14 +27,12 @@
 		}
 
 		function retrieveLoc(countsData, index) {
-			console.log(countsData[index].address);
 			$http.post('/geodata', { address: countsData[index].address })
 				.then(function(result) {
 					var item = JSON.parse(result.data);
 					var latLng = {};
-					countData[index].lat = item.results[0].geometry.location.lat;
-					countData[index].lng = item.results[0].geometry.location.lng;
-					console.log(countData[index]);
+					countData[index].latitude = item.results[0].geometry.location.lat;
+					countData[index].long = item.results[0].geometry.location.lng;
 				},
 				function(err) {
 					console.log(err);

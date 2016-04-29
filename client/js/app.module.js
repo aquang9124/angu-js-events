@@ -1,6 +1,6 @@
 ( function (angular) {
 	angular
-		.module('myApp', ['ngRoute', 'ngSanitize'])
+		.module('myApp', ['ngRoute', 'ngSanitize', 'highcharts-ng'])
 		.config(function($routeProvider) {
 			$routeProvider
 			.when('/', {
