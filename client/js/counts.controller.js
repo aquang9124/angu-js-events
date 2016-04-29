@@ -7,12 +7,17 @@
 		var vm = this;
 
 		// Bound variables
+		vm.map;
+		vm.myData;
+		vm.markers = [];
+		vm.newSearch = Search.newSearch;
 		vm.newAddress = Search.newAddress;
 		vm.countsData = [];
 		vm.locale;
 		vm.getCount = getCount;
 		vm.makeValid = makeValid;
 		vm.findLatLng = findLatLng;
+		vm.initMap = initMap;
 
 		// Function Calls
 		angular.element(document).ready(function() {
@@ -32,12 +37,24 @@
 					vm.makeValid();
 					console.log(vm.countsData);
 					vm.findLatLng();
-					vm.myData = Count.grab();
-				})
-				.then(function(res) {
-					console.log(res);
-					console.log('hi');
-					console.log(vm.myData);
+					var promise = new Promise(function(resolve, reject) {
+						var data = Count.grab();
+
+						if (data) 
+						{
+							resolve(data);
+						}
+						else
+						{
+							reject(Error("It Broke"));
+						}
+					});
+					promise
+						.then(function(result) {
+							console.log(result);
+							vm.loading = false;
+							vm.initMap();
+					});
 				});
 		}
 
@@ -69,7 +86,48 @@
 			}
 
 			return true;
-		}	
+		}
+
+		// Initializes google maps
+		function initMap() {
+			console.log(vm.newSearch);
+			var mapCenter = new google.maps.LatLng(vm.newSearch.lat, vm.newSearch.lng);
+			var mapOptions = {
+				center: mapCenter,
+				zoom: 13,
+				draggable: true,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+
+			vm.map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+			for (var data in vm.myData) {
+				console.log(vm.myData[data].lat);
+				var location = new google.maps.LatLng(vm.myData[data].lat, vm.myData[data].lng);
+
+				addMarker(location);
+			}
+		}
+
+		// Function to add a Google Maps marker, only gets called from within initMap
+		function addMarker(location) {
+			var marker = new google.maps.Marker({
+				position: location,
+				map: vm.map,
+				title: "Crime Location",
+				clickable: true
+			});
+
+			marker.info = new google.maps.InfoWindow({
+				content: "<div>" + "Nothing Yet" + "</div>"
+			});
+
+			google.maps.event.addListener(marker, 'click', function() {
+				marker.info.open(vm.map, marker);
+			});
+
+			vm.markers.push(marker);
+		}
 	
 
 	}

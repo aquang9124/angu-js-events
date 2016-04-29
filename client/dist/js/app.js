@@ -885,12 +885,17 @@
 		var vm = this;
 
 		// Bound variables
+		vm.map;
+		vm.myData;
+		vm.markers = [];
+		vm.newSearch = Search.newSearch;
 		vm.newAddress = Search.newAddress;
 		vm.countsData = [];
 		vm.locale;
 		vm.getCount = getCount;
 		vm.makeValid = makeValid;
 		vm.findLatLng = findLatLng;
+		vm.initMap = initMap;
 
 		// Function Calls
 		angular.element(document).ready(function() {
@@ -910,12 +915,24 @@
 					vm.makeValid();
 					console.log(vm.countsData);
 					vm.findLatLng();
-					vm.myData = Count.grab();
-				})
-				.then(function(res) {
-					console.log(res);
-					console.log('hi');
-					console.log(vm.myData);
+					var promise = new Promise(function(resolve, reject) {
+						var data = Count.grab();
+
+						if (data) 
+						{
+							resolve(data);
+						}
+						else
+						{
+							reject(Error("It Broke"));
+						}
+					});
+					promise
+						.then(function(result) {
+							console.log(result);
+							vm.loading = false;
+							vm.initMap();
+					});
 				});
 		}
 
@@ -947,7 +964,48 @@
 			}
 
 			return true;
-		}	
+		}
+
+		// Initializes google maps
+		function initMap() {
+			console.log(vm.newSearch);
+			var mapCenter = new google.maps.LatLng(vm.newSearch.lat, vm.newSearch.lng);
+			var mapOptions = {
+				center: mapCenter,
+				zoom: 13,
+				draggable: true,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+
+			vm.map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+			for (var data in vm.myData) {
+				console.log(vm.myData[data].lat);
+				var location = new google.maps.LatLng(vm.myData[data].lat, vm.myData[data].lng);
+
+				addMarker(location);
+			}
+		}
+
+		// Function to add a Google Maps marker, only gets called from within initMap
+		function addMarker(location) {
+			var marker = new google.maps.Marker({
+				position: location,
+				map: vm.map,
+				title: "Crime Location",
+				clickable: true
+			});
+
+			marker.info = new google.maps.InfoWindow({
+				content: "<div>" + "Nothing Yet" + "</div>"
+			});
+
+			google.maps.event.addListener(marker, 'click', function() {
+				marker.info.open(vm.map, marker);
+			});
+
+			vm.markers.push(marker);
+		}
 	
 
 	}
@@ -1126,13 +1184,20 @@
 
 		// This function executes whenever the place_changed event fires
 		function splitAddress() {
-			var place = vm.autocomplete.getPlace();
+			vm.place = vm.autocomplete.getPlace();
+
+			// If vm.place has geometry data then set lat and lng in the newSearch object.
+			if (vm.place.geometry)
+			{
+				vm.newSearch.lat = vm.place.geometry.location.lat();
+				vm.newSearch.lng = vm.place.geometry.location.lng();
+			}
 			
-			for (var i = 0; i < place.address_components.length; i++) {
-				var addressType = place.address_components[i].types[0];
+			for (var i = 0; i < vm.place.address_components.length; i++) {
+				var addressType = vm.place.address_components[i].types[0];
 
 				if (vm.componentForm[addressType]) {
-					var val = place.address_components[i][vm.componentForm[addressType]];
+					var val = vm.place.address_components[i][vm.componentForm[addressType]];
 					vm.newAddress[addressType] = val;
 				}
 			}

@@ -121,13 +121,20 @@
 
 		// This function executes whenever the place_changed event fires
 		function splitAddress() {
-			var place = vm.autocomplete.getPlace();
+			vm.place = vm.autocomplete.getPlace();
+
+			// If vm.place has geometry data then set lat and lng in the newSearch object.
+			if (vm.place.geometry)
+			{
+				vm.newSearch.lat = vm.place.geometry.location.lat();
+				vm.newSearch.lng = vm.place.geometry.location.lng();
+			}
 			
-			for (var i = 0; i < place.address_components.length; i++) {
-				var addressType = place.address_components[i].types[0];
+			for (var i = 0; i < vm.place.address_components.length; i++) {
+				var addressType = vm.place.address_components[i].types[0];
 
 				if (vm.componentForm[addressType]) {
-					var val = place.address_components[i][vm.componentForm[addressType]];
+					var val = vm.place.address_components[i][vm.componentForm[addressType]];
 					vm.newAddress[addressType] = val;
 				}
 			}
