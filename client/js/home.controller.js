@@ -39,10 +39,10 @@
 		$scope.$watch('vm.newSearch', function() {
 			Search.newSearch = vm.newSearch;
 		});
-		
+
 		$scope.$watch('vm.newAddress', function() {
 			Search.newAddress = vm.newAddress;
-		})
+		});
 
 		// Function implementations
 
@@ -62,7 +62,7 @@
 		function startSearch() {
 			// $location.path('/maps');
 			// $location.path('/posts');
-			console.log(vm.newAddress);
+			$location.path('/counts');
 		}
 
 		// Function that types out the text in the directions div
@@ -82,7 +82,7 @@
 			}
 		}
 
-		// Function that initializes autocomplete on the address input box
+		// This function initializes the autocomp and adds a listener for place_changed
 		function initAutocomplete() {
 			// Create the autocomplete object, restricting the search to geographical location types.
 			vm.autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), {types: ['geocode']});
@@ -110,6 +110,7 @@
 			}
 		}
 
+		// This function initializes the autocomp and adds a listener for place_changed
 		function initAutoComp() {
 			vm.autocomplete = new google.maps.places.Autocomplete(
 				(document.getElementById('autocomplete')),

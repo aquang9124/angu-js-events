@@ -881,14 +881,46 @@
 		.module('myApp')
 		.controller('countsCtrl', countsCtrl);
 
-	function countsCtrl($scope, Search) {
+	function countsCtrl($scope, Search, Count) {
 		var vm = this;
 
 		// Bound variables
-		
+		vm.newAddress = Search.newAddress;
+		vm.getCount = getCount;
+
+		// Function Calls
+		angular.element(document).ready(function() {
+			vm.getCount();
+		});
+
 		// Function implementations
+		function getCount() {
+			vm.loading = true;
+			var countsPromise = Count.find(vm.newAddress);
+		}
 
+	}
 
+} )(angular);
+( function(angular) {
+	angular
+		.module('myApp')
+		.factory('Count', Count);
+
+	function Count($http) {
+		var countData = [];
+		var factory = {
+			countData: countData,
+			find: find,
+		};
+
+		return factory;
+
+		// function implementations
+		function find(newAddress) {
+			console.log(newAddress.administrative_area_level_1);
+			console.log(newAddress.locality);
+		}
 	}
 
 } )(angular);
@@ -933,10 +965,10 @@
 		$scope.$watch('vm.newSearch', function() {
 			Search.newSearch = vm.newSearch;
 		});
-		
+
 		$scope.$watch('vm.newAddress', function() {
 			Search.newAddress = vm.newAddress;
-		})
+		});
 
 		// Function implementations
 
@@ -956,7 +988,7 @@
 		function startSearch() {
 			// $location.path('/maps');
 			// $location.path('/posts');
-			console.log(vm.newAddress);
+			$location.path('/counts');
 		}
 
 		// Function that types out the text in the directions div
@@ -976,7 +1008,7 @@
 			}
 		}
 
-		// Function that initializes autocomplete on the address input box
+		// This function initializes the autocomp and adds a listener for place_changed
 		function initAutocomplete() {
 			// Create the autocomplete object, restricting the search to geographical location types.
 			vm.autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), {types: ['geocode']});
@@ -1004,6 +1036,7 @@
 			}
 		}
 
+		// This function initializes the autocomp and adds a listener for place_changed
 		function initAutoComp() {
 			vm.autocomplete = new google.maps.places.Autocomplete(
 				(document.getElementById('autocomplete')),
