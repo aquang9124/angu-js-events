@@ -977,7 +977,10 @@
 						},
 					},
 					tooltip: {
-						enabled: false
+						style: {
+							padding: 10,
+							fontWeight: 'bold'
+						}
 					}
 				},
 				//The below properties are watched separately for changes.
@@ -993,7 +996,7 @@
 					}, {
 						name: 'Firearm',
 						y: vm.gun,
-						color: '#66ff99'
+						color: '#ffff00'
 					}, {
 						name: 'Non-lethal Firearm',
 						y: vm.bbgun,
@@ -1242,7 +1245,7 @@
 		var vm = this;
 
 		// Bound variables
-		vm.header = [{ message: 'Postings Map' }, { message: 'With Google Maps' }];
+		vm.header = [{ message: 'Crime Map' }, { message: 'With Google Maps' }];
 		vm.words = ["Hello!    ", "Fill out the form below to get information about the chosen category!    "];
 		vm.wordCount = 0;
 		vm.charCount = 0;

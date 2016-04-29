@@ -99,7 +99,10 @@
 						},
 					},
 					tooltip: {
-						enabled: false
+						style: {
+							padding: 10,
+							fontWeight: 'bold'
+						}
 					}
 				},
 				//The below properties are watched separately for changes.
@@ -115,7 +118,7 @@
 					}, {
 						name: 'Firearm',
 						y: vm.gun,
-						color: '#66ff99'
+						color: '#ffff00'
 					}, {
 						name: 'Non-lethal Firearm',
 						y: vm.bbgun,
