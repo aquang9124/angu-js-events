@@ -24,6 +24,8 @@
 	<nav id="navi-bar" ng-controller="routesCtrl as vm">
 		<ul id="navbar-ul">
 			<li class="navbar-li"><a href="#/" ng-class="vm.isActive('/') ? 'active' : 'inactive' ">Home</a></li>
+			<li ng-if="vm.isActive('/maps')" class="navbar-li"><a href="#/maps" ng-class="vm.isActive('/maps') ? 'active' : 'inactive' ">Map</a></li>
+			<li ng-if="vm.isActive('/counts')" class="navbar-li"><a href="#/counts" ng-class="vm.isActive('/counts') ? 'active' : 'inactive' ">Graph</a></li>
 		</ul>
 	</nav>
 	<div ng-view class="view-box">
