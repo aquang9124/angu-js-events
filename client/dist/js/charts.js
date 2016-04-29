@@ -1,0 +1,1 @@
+var highchartsNg = require('highcharts-ng');

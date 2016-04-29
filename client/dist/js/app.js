@@ -887,6 +887,7 @@
 		// Bound variables
 		vm.map;
 		vm.myData;
+		vm.chartConfig = {};
 		vm.markers = [];
 		vm.newSearch = Search.newSearch;
 		vm.newAddress = Search.newAddress;
@@ -896,9 +897,11 @@
 		vm.makeValid = makeValid;
 		vm.findLatLng = findLatLng;
 		vm.initMap = initMap;
+		vm.getData = getData;
 
 		// Function Calls
 		angular.element(document).ready(function() {
+			// vm.getData();
 			vm.getCount();
 		});
 
@@ -929,10 +932,63 @@
 					promise
 						.then(function(result) {
 							console.log(result);
+							// Map initialization is broken for now
 							vm.initMap(result);
 							vm.loading = false;
 						});
 				});
+		}
+
+		function getData() {
+			vm.loading = true;
+			var dataPromise = Count.find(vm.newAddress);
+
+			dataPromise.then(function(result) {
+				vm.countsData = result;
+				vm.loading = false;
+
+				//This is not a highcharts object. It just looks a little like one!
+				vm.chartConfig = {
+
+				  options: {
+				      //This is the Main Highcharts chart config. Any Highchart options are valid here.
+				      //will be overriden by values specified below.
+				      chart: {
+				          type: 'bar'
+				      },
+				      tooltip: {
+				          style: {
+				              padding: 10,
+				              fontWeight: 'bold'
+				          }
+				      }
+				  },
+				  //The below properties are watched separately for changes.
+
+				  //Series object (optional) - a list of series using normal Highcharts series options.
+				  series: [{
+				     data: [10, 15, 12, 8, 7]
+				  }],
+				  //Title configuration (optional)
+				  title: {
+				     text: 'Hello'
+				  },
+				  //Boolean to control showing loading status on chart (optional)
+				  //Could be a string if you want to show specific loading text.
+				  loading: false,
+				  //Configuration for the xAxis (optional). Currently only one x axis can be dynamically controlled.
+				  //properties currentMin and currentMax provided 2-way binding to the chart's maximum and minimum
+				  xAxis: {
+				  currentMin: 0,
+				  currentMax: 20,
+				  title: {text: 'values'}
+				  },
+				  //Whether to use Highstocks instead of Highcharts (optional). Defaults to false.
+				  useHighStocks: false,
+				  //size (optional) if left out the chart will default to size of the div or something sensible.
+				  //function (optional)
+				};
+			});
 		}
 
 		// Makes the addresses returned from the counted API valid addresses
@@ -978,11 +1034,11 @@
 
 			vm.map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 
-			for (var data in locData) {
-				console.log(locData[data]);
-				console.log(locData[data].long);
-				console.log(locData[data].age);
-				var location = new google.maps.LatLng(locData[data].lat, locData[data].lng);
+			for (var data in vm.myData) {
+				console.log(vm.myData[data].latitude);
+				console.log(vm.myData[data]);
+				console.log(vm.myData[data].age);
+				var location = new google.maps.LatLng(vm.myData[data].latitude, vm.myData[data].long);
 
 				addMarker(location);
 			}
@@ -1044,9 +1100,8 @@
 			$http.post('/geodata', { address: countsData[index].address })
 				.then(function(result) {
 					var item = JSON.parse(result.data);
-					var latLng = {};
-					countData[index].latitude = item.results[0].geometry.location.lat;
-					countData[index].long = item.results[0].geometry.location.lng;
+					countData[index].latitude = item.results[0].geometry.location.lat.toString();
+					countData[index].long = item.results[0].geometry.location.lng.toString();
 				},
 				function(err) {
 					console.log(err);
