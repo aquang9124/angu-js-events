@@ -13,4 +13,8 @@ module.exports = function(app) {
 	app.post('/counts', function(req, res) {
 		counts.show(req, res);
 	});
+
+	app.post('/geodata', function(req, res) {
+		counts.getGeo(req, res);
+	});
 };

@@ -904,15 +904,18 @@
 			vm.loading = true;
 			var countsPromise = Count.find(vm.newAddress);
 
-			countsPromise.then(function(result) {
-				vm.countsData = result;
-				vm.makeValid();
-				console.log(vm.countsData);
-			});
+			countsPromise
+				.then(function(result) {
+					vm.countsData = result;
+					vm.makeValid();
+					console.log(vm.countsData);
+					vm.findLatLng();
+					vm.countsData = Count.countData;
+					console.log(vm.countsData);
+				});
 
-			vm.findLatLng();
-			vm.countsData = Count.countData;
-			console.log(vm.countsData);
+			
+			
 		}
 
 		// Makes the addresses returned from the counted API valid addresses
@@ -977,10 +980,13 @@
 		}
 
 		function retrieveLoc(countsData, index) {
-			$http.get('http://maps.googleapis.com/maps/api/geocode/json?address=' + countsData[index].address + '&key=AIzaSyB99XQamcdZpKoSal7Jx5BX0zw96xVJEhM')
+			console.log(countsData[index].address);
+			$http.post('/geodata', { address: countsData[index].address })
 				.then(function(result) {
-					countData[index].lat = result.results.geometry.location.lat;
-					countData[index].lng = result.results.geometry.location.lng;
+					var item = JSON.parse(result.data);
+					countData[index].lat = item.results[0].geometry.location.lat;
+					countData[index].lng = item.results[0].geometry.location.lng;
+					console.log(countData[index]);
 				},
 				function(err) {
 					console.log(err);

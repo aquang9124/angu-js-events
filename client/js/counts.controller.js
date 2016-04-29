@@ -26,15 +26,18 @@
 			vm.loading = true;
 			var countsPromise = Count.find(vm.newAddress);
 
-			countsPromise.then(function(result) {
-				vm.countsData = result;
-				vm.makeValid();
-				console.log(vm.countsData);
-			});
+			countsPromise
+				.then(function(result) {
+					vm.countsData = result;
+					vm.makeValid();
+					console.log(vm.countsData);
+					vm.findLatLng();
+					vm.countsData = Count.countData;
+					console.log(vm.countsData);
+				});
 
-			vm.findLatLng();
-			vm.countsData = Count.countData;
-			console.log(vm.countsData);
+			
+			
 		}
 
 		// Makes the addresses returned from the counted API valid addresses
