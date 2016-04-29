@@ -19,8 +19,7 @@
 
 		// Function calls
 		angular.element(document).ready(function() {
-			vm.getTaps();
-			// vm.findCrimes();
+			vm.findCrimes();
 		});
 
 		// Function implementations

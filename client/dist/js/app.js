@@ -438,8 +438,8 @@
 		var vm = this;
 
 		// Bound variables
-		vm.header = [{ message: 'Crime Map' }, { message: 'With Google Maps' }];
-		vm.words = ["Hello!    ", "Fill out the form below to get information about the chosen category!    "];
+		vm.header = 'Crime Map';
+		vm.words = ["Hello!    ", "Fill out the form below to get information!    "];
 		vm.wordCount = 0;
 		vm.charCount = 0;
 		vm.instructions = "";
@@ -465,6 +465,7 @@
 		vm.initAutocomplete = initAutocomplete;
 		vm.initAutoComp = initAutoComp;
 		vm.getAddress = getAddress;
+		vm.mapCrimes = mapCrimes;
 
 		// Watches
 		$scope.$watch('vm.newSearch', function() {
@@ -491,9 +492,13 @@
 
 		// Function that changes the view over to the posts partial
 		function startSearch() {
-			// $location.path('/maps');
+			// 
 			// $location.path('/posts');
 			$location.path('/counts');
+		}
+
+		function mapCrimes() {
+			$location.path('/maps');
 		}
 
 		// Function that types out the text in the directions div
@@ -625,8 +630,7 @@
 
 		// Function calls
 		angular.element(document).ready(function() {
-			vm.getTaps();
-			// vm.findCrimes();
+			vm.findCrimes();
 		});
 
 		// Function implementations
