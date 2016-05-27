@@ -1,7 +1,7 @@
 var unirest = require('unirest');
 var request = require('request');
-var mashKey = "bDPDcJeR9BmshPk8xl2oUBZ4mM14p1xzufRjsnWu3DBQ4E9fq0";
-var authToken = 'b0993c5fbee380615cad20627a188801';
+var mashKey = "INSERTMASHAPEKEYHERE";
+var authToken = 'INSERTAUTHTOKENHERE';
 
 module.exports = {
 	show: function(req, res) {
