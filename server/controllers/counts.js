@@ -23,7 +23,7 @@ module.exports = {
 	},
 
 	getGeo: function(req, res) {
-		var geoUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + req.body.address + '&key=AIzaSyB99XQamcdZpKoSal7Jx5BX0zw96xVJEhM';
+		var geoUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + req.body.address + '&key=INSERTKEYHERE';
 		var options = {
 			method: 'GET',
 			url: geoUrl
